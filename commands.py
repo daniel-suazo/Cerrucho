@@ -93,6 +93,8 @@ def pay(person_id, amount):
 
 
 def list_people():
+    print("People:")
+    print(f'{"ID":<3} {"Name":<15} {"Phone Number":<20} {"Amount Due":<13} {"Services":<10}')
     with sqlite3.connect("db.db") as conn:
         cur = conn.cursor()
         cur.execute(
@@ -107,22 +109,26 @@ def list_people():
             services = cur.fetchall()
             service_names = []
             for service in services:
+                # print(service)
                 cur.execute(
                     "SELECT name FROM Service WHERE ID = ?", (
-                        service[0],)
+                        service[1],)
                 )
                 service_name = cur.fetchone()
+                # print(service_name)
                 service_names.append(service_name[0])
-            print(person[0], person[1], person[2], person[3],
-                  f"{[name for name in service_names]}")
+            print(
+                f'{person[0]:<3} {person[1]:<15} {person[2]:<20} {person[3]:<13} {[name for name in service_names]}')
 
 
 def list_services():
+    print("Services:")
     with sqlite3.connect("db.db") as conn:
         cur = conn.cursor()
         cur.execute(
             "SELECT * FROM Service"
         )
         services = cur.fetchall()
+        print(f'{"ID":<5}{"Name":<10}{"Price":<8}')
         for service in services:
-            print(service[0], service[1], service[2])
+            print(f"{service[0]:<3} {service[1]:<10} {service[2]:<8}")

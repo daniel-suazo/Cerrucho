@@ -20,6 +20,9 @@ while command != "quit" or command != "q":
         list_people()
     elif commands[0] == "list_services":
         list_services()
+    elif commands[0] == "list":
+        list_people()
+        list_services()
     else:
         print("Invalid command")
     command = input(">")
